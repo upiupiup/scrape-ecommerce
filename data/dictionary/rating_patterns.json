@@ -1,92 +1,32 @@
 [
   {
-    "id": "frac_out_of_5",
-    "pattern": "\\b([1-5](?:[.,]5)?)\\s*/\\s*5\\b",
-    "example": "4.5/5 mantap"
+    "id": "out_of_5_any",
+    "pattern": "(?:\\(|\\[)?\\s*((?:[1-5](?:[.,]5)?)|(?:[1-4]\\s?(?:½|1/2)))\\s*/\\s*5\\s*(?:\\)|\\])?",
+    "example": "4,5/5 mantap"
   },
   {
-    "id": "bintang_number",
-    "pattern": "\\bbintang\\s*([1-5](?:[.,]5)?)\\b",
-    "example": "bintang 4,5 cukup oke"
-  },
-  {
-    "id": "number_bintang",
-    "pattern": "\\b([1-5])\\s*bintang\\b",
-    "example": "5 bintang buat seller ini"
-  },
-  {
-    "id": "word_number_bintang",
-    "pattern": "\\b(satu|dua|tiga|empat|lima)\\s*bintang\\b",
-    "example": "tiga bintang, sesuai harga"
-  },
-  {
-    "id": "bintangnya_number",
-    "pattern": "\\bbintang(?:nya|ny| nya)\\s*([1-5])\\b",
-    "example": "bintangnya 4 karena telat kirim"
-  },
-  {
-    "id": "kasih_bintang",
-    "pattern": "\\b(kasih|beri|dapat|ngasih)\\s*([1-5])\\s*bintang\\b",
+    "id": "bintang_any",
+    "pattern": "\\b(?:(?:kasih|beri|dapat|ngasih)\\s*)?(?:bintang(?:nya|ny|\\snya)?\\s*((?:\\d+(?:[.,]\\d+)?)|(?:[1-4]\\s?(?:½|1/2)))(?:\\+{1,2})?|([1-5])\\s*bintang|(satu|dua|tiga|empat|lima)\\s*bintang)\\b",
     "example": "kasih 5 bintang"
   },
   {
-    "id": "bintang_many",
-    "pattern": "\\bbintang\\s*\\d{3,}(?:\\++)?(?=\\s|$|[^\\w])",
-    "example": "bintang 1000++"
-  },
-  {
-    "id": "fraction_half",
-    "pattern": "\\b([1-5])(?:\\s?½|(?:\\s?1\\/2)|[.,]5)\\s*/\\s*5\\b",
-    "example": "4½/5 layak beli"
-  },
-  {
-    "id": "bintang_half_after",
-    "pattern": "\\bbintang\\s*([1-5])(?:\\s?½|(?:\\s?1\\/2)|[.,]5)\\b",
-    "example": "bintang 3,5 untuk kualitas"
-  },
-  {
-    "id": "bintang_half_before",
-    "pattern": "\\b([1-5])(?:\\s?½|(?:\\s?1\\/2)|[.,]5)\\s*bintang\\b",
-    "example": "4,5 bintang"
-  },
-  {
-    "id": "out_of_ten",
-    "pattern": "\\b([0-9]{1,2}(?:[.,]5)?)\\s*/\\s*10\\b",
-    "example": "9/10 worth it"
-  },
-  {
-    "id": "rating_colon",
+    "id": "rating_word_number",
     "pattern": "\\b(rating|rate|nilai|skor|score|grade)\\s*[:\\-]?\\s*([1-5](?:[.,]5)?)\\b",
     "example": "rating: 5"
   },
   {
-    "id": "en_stars_word",
-    "pattern": "\\b([1-5])\\s*stars?\\b",
+    "id": "stars_word_any",
+    "pattern": "\\b((?:[1-5])|(?:satu|dua|tiga|empat|lima))\\s*stars?\\b",
     "example": "4 stars overall"
   },
   {
-    "id": "id_stars_word",
-    "pattern": "\\b(satu|dua|tiga|empat|lima)\\s*star\\b",
-    "example": "tiga star lumayan"
-  },
-  {
-    "id": "stars_repeated",
-    "pattern": "(?:⭐(?:\\uFE0F)?|★|🌟|✩|✮|✯){2,10}",
-    "example": "⭐⭐⭐⭐⭐"
-  },
-  {
-    "id": "star_multiplication",
-    "pattern": "(?:⭐(?:\\uFE0F)?|★)\\s*[xX×]\\s*([1-5])",
+    "id": "emoji_stars_any",
+    "pattern": "(?:\\b(?:⭐(?:\\uFE0F)?|★)\\s*[xXx]\\s*([1-5])\\b)|(?:(?:⭐(?:\\uFE0F)?|★|🌟|✩|✮|✯){2,10})",
     "example": "⭐ x5"
   },
   {
-    "id": "paren_or_bracket_5_5",
-    "pattern": "[\\(\\[]\\s*([1-5](?:[.,]5)?)\\s*/\\s*5\\s*[\\)\\]]",
-    "example": "(5/5) recommended"
-  },
-  {
-    "id": "number_of_number",
-    "pattern": "\\b([1-5])\\s*(?:of|dr)\\s*5\\b",
+    "id": "number_of_five",
+    "pattern": "\\b([1-5])\\s*(?:of|out\\s+of|dr|dari)\\s*5\\b",
     "example": "4 of 5 for design"
   }
 ]
