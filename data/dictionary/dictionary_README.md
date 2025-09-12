@@ -1,4 +1,4 @@
-# `data/dictionary` - Quick Guide
+# `dictionary` - Quick Guide
 
 This folder contains JSON dictionaries used by **Leksara** to standardize and clean Indonesian e‑commerce text.
 
