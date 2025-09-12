@@ -1,0 +1,32 @@
+[
+  {
+    "id": "out_of_5_any",
+    "pattern": "(?:\\(|\\[)?\\s*((?:[1-5](?:[.,]5)?)|(?:[1-4]\\s?(?:½|1/2)))\\s*/\\s*5\\s*(?:\\)|\\])?",
+    "example": "4,5/5 mantap"
+  },
+  {
+    "id": "bintang_any",
+    "pattern": "\\b(?:(?:kasih|beri|dapat|ngasih)\\s*)?(?:bintang(?:nya|ny|\\snya)?\\s*((?:\\d+(?:[.,]\\d+)?)|(?:[1-4]\\s?(?:½|1/2)))(?:\\+{1,2})?|([1-5])\\s*bintang|(satu|dua|tiga|empat|lima)\\s*bintang)\\b",
+    "example": "kasih 5 bintang"
+  },
+  {
+    "id": "rating_word_number",
+    "pattern": "\\b(rating|rate|nilai|skor|score|grade)\\s*[:\\-]?\\s*([1-5](?:[.,]5)?)\\b",
+    "example": "rating: 5"
+  },
+  {
+    "id": "stars_word_any",
+    "pattern": "\\b((?:[1-5])|(?:satu|dua|tiga|empat|lima))\\s*stars?\\b",
+    "example": "4 stars overall"
+  },
+  {
+    "id": "emoji_stars_any",
+    "pattern": "(?:\\b(?:⭐(?:\\uFE0F)?|★)\\s*[xX×]\\s*([1-5])\\b)|(?:(?:⭐(?:\\uFE0F)?|★|🌟|✩|✮|✯){2,10})",
+    "example": "⭐ x5"
+  },
+  {
+    "id": "number_of_five",
+    "pattern": "\\b([1-5])\\s*(?:of|out\\s+of|dr|dari)\\s*5\\b",
+    "example": "4 of 5 for design"
+  }
+]
