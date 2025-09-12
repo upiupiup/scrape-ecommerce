@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "sections": {
+    "acronym": {
+      "conflict_rules": [
+        {
+          "id": "m_unit_vs_size",
+          "token": "m",
+          "candidates": [
+            "meter",
+            "medium"
+          ],
+          "rules": [
+            {
+              "context_pattern": "(\\d+)\\s*m\\b",
+              "preferred": "meter",
+              "desc": "If 'm' follows a number, interpret as unit meter."
+            },
+            {
+              "context_pattern": "\\b(size|ukuran|baju)\\s*m\\b",
+              "preferred": "medium",
+              "desc": "If 'm' is preceded by size indicators, interpret as size Medium."
+            }
+          ]
+        },
+        {
+          "id": "l_unit_vs_size",
+          "token": "l",
+          "candidates": [
+            "liter",
+            "large"
+          ],
+          "rules": [
+            {
+              "context_pattern": "(\\d+)\\s*l\\b",
+              "preferred": "liter",
+              "desc": "If 'l' follows a number, interpret as unit liter."
+            },
+            {
+              "context_pattern": "\\b(size|ukuran|baju)\\s*l\\b",
+              "preferred": "large",
+              "desc": "If 'l' is preceded by size indicators, interpret as size Large."
+            }
+          ]
+        },
+        {
+          "id": "s_unit_vs_size",
+          "token": "s",
+          "candidates": [
+            "small",
+            "second"
+          ],
+          "rules": [
+            {
+              "context_pattern": "(\\d+)\\s*s\\b",
+              "preferred": "second",
+              "desc": "If 's' follows a number, interpret as unit second."
+            },
+            {
+              "context_pattern": "\\b(size|ukuran|baju)\\s*s\\b",
+              "preferred": "small",
+              "desc": "If 's' is preceded by size indicators, interpret as size Small."
+            }
+          ]
+        },
+        {
+          "id": "sim_card_vs_license",
+          "token": "sim",
+          "candidates": [
+            "subscriber identity module (kartu seluler)",
+            "surat ijin mengemudi"
+          ],
+          "rules": [
+            {
+              "context_pattern": "\\b(kartu|hp|ponsel|provider)\\b.*\\bsim\\b",
+              "preferred": "subscriber identity module (kartu seluler)",
+              "desc": "If context mentions kartu, hp, ponsel, or provider → SIM card."
+            },
+            {
+              "context_pattern": "\\bsim\\s*(c|a|b)\\b",
+              "preferred": "surat ijin mengemudi",
+              "desc": "If SIM followed by license type letter (C/A/B) → driving license."
+            }
+          ]
+        },
+        {
+          "id": "qc_conflict",
+          "token": "qc",
+          "candidates": [
+            "quick charge",
+            "quality control"
+          ],
+          "rules": [
+            {
+              "context_pattern": "\\b(qc\\s*3\\.0|charger|usb|fast)\\b",
+              "preferred": "quick charge",
+              "desc": "If context relates to electronics/charging → Quick Charge."
+            },
+            {
+              "context_pattern": "\\b(qc\\s*check|passed|failed|test)\\b",
+              "preferred": "quality control",
+              "desc": "If context relates to inspection/testing → Quality Control."
+            }
+          ]
+        }
+      ],
+      "priority_order": [
+        "whitelist",
+        "acronym",
+        "slang"
+      ]
+    }
+  }
+}
