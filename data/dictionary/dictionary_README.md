@@ -132,4 +132,89 @@ This folder contains JSON dictionaries used by **Leksara** to standardize and cl
 }
 ```
 
-**Last updated:** v1
+Oke, biar jelas, aku tambahin bagian **Field Descriptions** di bawah schema `dictionary_rules.json`. Jadi orang tim langsung tahu tiap field dipakai buat apa 👇
+
+---
+
+### 6) `dictionary_rules.json`
+
+**Purpose**
+
+* Handle **conflicts** in dictionary entries where a token has multiple possible meanings.
+* Rules are defined per section (e.g., `acronym`, `slangs`) so that context decides which meaning is correct.
+* Prevents mis-normalization (e.g., `m` could mean *meter* or *medium*).
+
+**Schema**
+
+```json
+{
+  "schema_version": "1.0",
+  "sections": {
+    "<dictionary_section>": {
+      "conflict_rules": [
+        {
+          "id": "<unique_rule_id>",
+          "token": "<ambiguous_token>",
+          "candidates": ["<meaning1>", "<meaning2>"],
+          "rules": [
+            {
+              "context_pattern": "<regex_pattern>",
+              "preferred": "<chosen_meaning>",
+              "desc": "<human_readable_explanation>"
+            }
+          ]
+        }
+      ],
+      "priority_order": ["whitelist", "acronym", "slang"]
+    }
+  }
+}
+```
+
+**Field Descriptions**
+
+* **`schema_version`** → versioning control, in case schema changes in the future.
+* **`sections`** → grouping by dictionary type (e.g., `"acronym"`, `"slangs"`).
+* **`conflict_rules`** → list of rules for tokens that have more than one meaning.
+
+  * **`id`** → unique identifier for the rule (string).
+  * **`token`** → the ambiguous dictionary key (e.g., `"m"`, `"l"`, `"s"`).
+  * **`candidates`** → all possible meanings for that token.
+  * **`rules`** → how to resolve the conflict based on context.
+
+    * **`context_pattern`** → regex used to detect usage context.
+    * **`preferred`** → which candidate to pick if `context_pattern` matches.
+    * **`desc`** → explanation in human-readable form.
+* **`priority_order`** → global priority if conflicts remain across different dictionaries (example: always trust whitelist > acronym > slang).
+
+**Example entries (excerpt)**
+
+```json
+{
+  "schema_version": "1.0",
+  "sections": {
+    "acronym": {
+      "conflict_rules": [
+        {
+          "id": "m_unit_vs_size",
+          "token": "m",
+          "candidates": ["meter", "medium"],
+          "rules": [
+            {
+              "context_pattern": "(\\d+)\\s*m\\b",
+              "preferred": "meter",
+              "desc": "If 'm' follows a number, interpret as unit meter."
+            },
+            {
+              "context_pattern": "\\b(size|ukuran|baju)\\s*m\\b",
+              "preferred": "medium",
+              "desc": "If 'm' is preceded by size indicators, interpret as size Medium."
+            }
+          ]
+        }
+      ],
+      "priority_order": ["whitelist", "acronym", "slang"]
+    }
+  }
+}
+```
