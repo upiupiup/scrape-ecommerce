@@ -105,5 +105,31 @@ This folder contains JSON dictionaries used by **Leksara** to standardize and cl
 }
 ```
 
+### 5) `emoji_dictionary.json`
+
+**Purpose**
+- Map common used emojis in reviews or product names to a *canonical* Indonesian form for consistent matching
+
+**Schema**
+```json
+{
+  "<emoji>": "<mapping_bahasa_indonesia>"
+}
+```
+
+**Example entries (except)**
+```json
+{
+    "👍": "bagus",
+    "🙏": "terima kasih",
+    "🥰": "suka banget",
+    "😍": "suka banget",
+    "😁": "senang / gembira",
+    "🫶": "cinta / kasih sayang / support",
+    "😭": "sedih / terharu",
+    "❤": "cinta / suka",
+    "😊": "senyum / bahagia"
+}
+```
 
 **Last updated:** v1
