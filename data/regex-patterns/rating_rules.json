@@ -1,0 +1,293 @@
+{
+  "schema_version": "1.0",
+  "defaults": {
+    "flags": [
+      "IGNORECASE",
+      "MULTILINE"
+    ],
+    "min_rating": 1.0,
+    "max_rating": 5.0
+  },
+  "rules": [
+    {
+      "id": "frac_out_of_5",
+      "pattern": "\\b([1-5](?:[.,]5)?)\\s*/\\s*5\\b",
+      "example": "4.5/5 mantap",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 100
+    },
+    {
+      "id": "paren_or_bracket_5_5",
+      "pattern": "[\\(\\[]\\s*([1-5](?:[.,]5)?)\\s*/\\s*5\\s*[\\)\\]]",
+      "example": "(5/5) recommended",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 98
+    },
+    {
+      "id": "bintang_many",
+      "pattern": "\\bbintang\\s*\\d{3,}(?:\\++)?(?=\\s|$|[^\\w])",
+      "example": "bintang 1000++",
+      "type": "assign",
+      "value": 5.0,
+      "priority": 96
+    },
+    {
+      "id": "bintang_number",
+      "pattern": "\\bbintang\\s*([1-5](?:[.,]5)?)\\b",
+      "example": "bintang 4,5 cukup oke",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 94
+    },
+    {
+      "id": "number_bintang",
+      "pattern": "\\b([1-5])\\s*bintang\\b",
+      "example": "5 bintang buat seller ini",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 92
+    },
+    {
+      "id": "word_number_bintang",
+      "pattern": "\\b(satu|dua|tiga|empat|lima)\\s*bintang\\b",
+      "example": "tiga bintang, sesuai harga",
+      "type": "assign",
+      "mapping": {
+        "satu": 1,
+        "dua": 2,
+        "tiga": 3,
+        "empat": 4,
+        "lima": 5
+      },
+      "value_from_group": 1,
+      "priority": 90
+    },
+    {
+      "id": "bintangnya_number",
+      "pattern": "\\bbintang(?:nya|ny| nya)\\s*([1-5])\\b",
+      "example": "bintangnya 4 karena telat kirim",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 88
+    },
+    {
+      "id": "kasih_bintang",
+      "pattern": "\\b(kasih|beri|dapat|ngasih)\\s*([1-5])\\s*bintang\\b",
+      "example": "kasih 5 bintang",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 86
+    },
+    {
+      "id": "bintang_half_after",
+      "pattern": "\\bbintang\\s*([1-5])(?:\\s?½|(?:\\s?1\\/2)|[.,]5)\\b",
+      "example": "bintang 3,5 untuk kualitas",
+      "type": "extract",
+      "value_group": 1,
+      "add": 0.5,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 84
+    },
+    {
+      "id": "bintang_half_before",
+      "pattern": "\\b([1-5])(?:\\s?½|(?:\\s?1\\/2)|[.,]5)\\s*bintang\\b",
+      "example": "4,5 bintang",
+      "type": "extract",
+      "value_group": 1,
+      "add": 0.5,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 82
+    },
+    {
+      "id": "fraction_half",
+      "pattern": "\\b([1-5])(?:\\s?½|(?:\\s?1\\/2)|[.,]5)\\s*/\\s*5\\b",
+      "example": "4½/5 layak beli",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 80
+    },
+    {
+      "id": "rating_colon",
+      "pattern": "\\b(rating|rate|nilai|skor|score|grade)\\s*[:\\-]?\\s*([1-5](?:[.,]5)?)\\b",
+      "example": "rating: 5",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 78
+    },
+    {
+      "id": "en_stars_word",
+      "pattern": "\\b([1-5])\\s*stars?\\b",
+      "example": "4 stars overall",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 76
+    },
+    {
+      "id": "id_stars_word",
+      "pattern": "\\b(satu|dua|tiga|empat|lima)\\s*star\\b",
+      "example": "tiga star lumayan",
+      "type": "assign",
+      "mapping": {
+        "satu": 1,
+        "dua": 2,
+        "tiga": 3,
+        "empat": 4,
+        "lima": 5
+      },
+      "value_from_group": 1,
+      "priority": 74
+    },
+    {
+      "id": "stars_repeated",
+      "pattern": "(?:⭐(?:\\uFE0F)?|★|🌟|✩|✮|✯){2,10}",
+      "example": "⭐⭐⭐⭐⭐",
+      "type": "count_emoji",
+      "emojis": [
+        "⭐",
+        "★",
+        "🌟",
+        "✩",
+        "✮",
+        "✯"
+      ],
+      "min_count": 2,
+      "max_count": 5,
+      "priority": 72
+    },
+    {
+      "id": "star_multiplication",
+      "pattern": "(?:⭐(?:\\uFE0F)?|★)\\s*[xX×]\\s*([1-5])",
+      "example": "⭐ x5",
+      "type": "extract",
+      "value_group": 1,
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 70
+    },
+    {
+      "id": "number_of_number",
+      "pattern": "\\b([1-5])\\s*(?:of|dr)\\s*5\\b",
+      "example": "4 of 5 for design",
+      "type": "extract",
+      "value_group": 1,
+      "postprocess": {
+        "replace": {
+          ",": "."
+        }
+      },
+      "clamp": [
+        1.0,
+        5.0
+      ],
+      "priority": 68
+    }
+  ],
+  "blacklist": [
+    {
+      "id": "star_bullet_single",
+      "pattern": "^[\\s]*[★⭐]",
+      "reason": "Bullet list (satu bintang di awal baris), bukan rating."
+    }
+  ]
+}

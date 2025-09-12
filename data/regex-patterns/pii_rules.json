@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "defaults": {
+    "flags": [
+      "IGNORECASE",
+      "MULTILINE"
+    ]
+  },
+  "rules": [
+    {
+      "id": "pii_phone",
+      "pattern": "\\b(?:\\+62|62|0)(?:\\d{2,3}[- ]?){2,4}\\d{3,4}\\b",
+      "example": "+6281234567890",
+      "type": "extract",
+      "value_group": 0,
+      "normalize": "phone",
+      "priority": 100,
+      "desc": "Nomor HP Indonesia umum"
+    },
+    {
+      "id": "pii_email",
+      "pattern": "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b",
+      "example": "customer123@gmail.com",
+      "type": "extract",
+      "value_group": 0,
+      "normalize": "email",
+      "priority": 98,
+      "desc": "Alamat email umum"
+    },
+    {
+      "id": "pii_nik",
+      "pattern": "(?<!\\d)(1[1-9]|21|[37][1-6]|5[1-3]|6[1-5]|[89][12])\\d{2}\\d{2}([04][1-9]|[1256][0-9]|[37][01])(0[1-9]|1[0-2])\\d{2}\\d{4}(?!\\d)",
+      "example": "3276120705010003",
+      "type": "extract",
+      "value_group": 0,
+      "normalize": "id",
+      "priority": 95,
+      "desc": "NIK/KTP Indonesia"
+    },
+    {
+      "id": "pii_addr_trigger",
+      "pattern": "\\b(Jl\\.?|Jalan|Gg\\.?|Gang|RT|RW|Kel(?:urahan)?\\.?|Kec(?:amatan)?\\.?|Kab(?:upaten)?\\.?|Kota|Prov(?:insi)?\\.?|K\\.?\\s?P\\.?|KP)\\b",
+      "example": "Jl. Merdeka",
+      "type": "trigger",
+      "priority": 50,
+      "desc": "Pemicu window alamat"
+    },
+    {
+      "id": "pii_addr_street",
+      "pattern": "\\b(?:Jl\\.?|Jalan|Gg\\.?|Gang)\\b\\s+[A-Z0-9][A-Za-z0-9 .\\-]*",
+      "example": "Jalan Sudirman",
+      "type": "component",
+      "priority": 49,
+      "desc": "Nama jalan/gang"
+    },
+    {
+      "id": "pii_addr_house",
+      "pattern": "\\b(?:No\\.?|No|Nomor|Nomer|Nmr|#)\\s*\\w+\\b",
+      "example": "No. 12",
+      "type": "component",
+      "priority": 49,
+      "desc": "Nomor rumah/gedung"
+    },
+    {
+      "id": "pii_addr_rtrw",
+      "pattern": "\\bRT\\s*\\d{1,2}\\s*RW\\s*\\d{1,2}\\b",
+      "example": "RT 03 RW 05",
+      "type": "component",
+      "priority": 49,
+      "desc": "RT/RW dengan angka"
+    },
+    {
+      "id": "pii_addr_kel",
+      "pattern": "\\bKel(?:urahan)?\\.?\\s+[A-Za-z][A-Za-z .\\-]*\\b",
+      "example": "Kelurahan Melati",
+      "type": "component",
+      "priority": 49,
+      "desc": "Kelurahan + nama"
+    },
+    {
+      "id": "pii_addr_kec",
+      "pattern": "\\bKec(?:amatan)?\\.?\\s+[A-Za-z][A-Za-z .\\-]*\\b",
+      "example": "Kecamatan Setiabudi",
+      "type": "component",
+      "priority": 49,
+      "desc": "Kecamatan + nama"
+    },
+    {
+      "id": "pii_addr_kabkota",
+      "pattern": "\\b(?:Kab(?:upaten)?|Kota)\\.?\\s+[A-Za-z][A-Za-z .\\-]*\\b",
+      "example": "Kabupaten Sragen",
+      "type": "component",
+      "priority": 49,
+      "desc": "Kabupaten/Kota + nama"
+    },
+    {
+      "id": "pii_addr_prov",
+      "pattern": "\\bProv(?:insi)?\\.?\\s+[A-Za-z][A-Za-z .\\-]*\\b",
+      "example": "Provinsi Jawa Tengah",
+      "type": "component",
+      "priority": 49,
+      "desc": "Provinsi + nama"
+    },
+    {
+      "id": "pii_addr_zip",
+      "pattern": "\\b\\d{5}\\b",
+      "example": "57262",
+      "type": "component",
+      "priority": 49,
+      "desc": "Kode pos 5 digit."
+    }
+  ],
+  "blacklist": [
+    {
+      "id": "email_like_but_not",
+      "pattern": "\\bexample\\.com\\b",
+      "reason": "Alamat dummy (bukan PII nyata)"
+    }
+  ]
+}
